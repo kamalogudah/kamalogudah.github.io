@@ -34,4 +34,4 @@ When it comes to calling methods on objects in Ruby one has a number of alternat
 
 ```
 
-And that is it for today, 
+And that is it for today.
