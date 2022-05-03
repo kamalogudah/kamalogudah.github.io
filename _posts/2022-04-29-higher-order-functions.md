@@ -1,11 +1,13 @@
 ---
-title: 'Day 2: Syntax in Functions'
+title: 'Day 4: Higher Order Functions'
 categories:
   - Erlang
 tags:
-  - Programming 101
-  - Pattern Matching
+  - Closures
+  - Lambda Calculus 
 ---
+  Type Safety is the new cool, type systems give progrtammers more safety and speed due to less errors. Erlang is a dynamically typed language where error is caught at runtime and not compile time.
+  
   An `=` sign in Erlang/Elixir is not about assignment but rather is a match operator, the same way it is in Algebra. Pattern matching allows for using different function clauses to match different cases, this results in having methods with the same name and arity unlike in languages such as Ruby.
   
   ```erlang
@@ -149,7 +151,8 @@ Using `true` is common in Erlang however it is not the best thus instead of doin
   ```
 
 **References**
-For more information on this topic you can checkout the following amazing posts:
-1. [Syntax in Functions](https://learnyousomeerlang.com/syntax-in-functions)
 
+  For more information on this topic you can checkout the following amazing posts:
+1. [Learn You Some Erlang For Greater Good](https://learnyousomeerlang.com//)
+2. [100 days of code](https://www.100daysofcode.com//)
 
