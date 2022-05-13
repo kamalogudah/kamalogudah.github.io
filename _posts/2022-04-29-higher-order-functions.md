@@ -3,156 +3,101 @@ title: 'Day 4: Higher Order Functions'
 categories:
   - Erlang
 tags:
+  - Higher Order Functions
   - Closures
-  - Lambda Calculus 
 ---
-  Type Safety is the new cool, type systems give progrtammers more safety and speed due to less errors. Erlang is a dynamically typed language where error is caught at runtime and not compile time.
+  In functional programming concept of higher order functions is where we use functions as parameters to other functions. Resulting in the function parameter being used as any other variable within the function. The origin of higher order functions is [lambda calculus](https://en.wikipedia.org/wiki/Lambda_calculus).
+
+  ```erlang
+    -module(hhfuns).
+    -compile(export_all).
   
-  An `=` sign in Erlang/Elixir is not about assignment but rather is a match operator, the same way it is in Algebra. Pattern matching allows for using different function clauses to match different cases, this results in having methods with the same name and arity unlike in languages such as Ruby.
-  
-  ```erlang
-    function(X) ->
-      Expression;
-    function(Y) ->
-      Expression;
-    function(_) ->
-      Expression.
-
-   ```
-Above we have three *functional clauses* separated by semicolons(;) the three form a *function declaration* notice they have the same name and arity.
-
-When a variable is bound, it has a value connected to it. When a variable is unbound, no value is connected to the variable. Once bound, the value of the variable cannot be changed. The variable is immutable in Erlang and Elixir.
-
-**Guards**
-In Erlang guards are used as additional clauses in function's head to make pattern matching more expressive.
-Something like this: 
-
-  ```erlang
-    old_enough(0) -> false;
-    old_enough(1) -> false;
-    old_enough(2) -> false;
-    ...
-    old_enough(14) -> false;
-    old_enough(15) -> false;
-    old_enough(_) -> true.
-
-   ```
-Could be represented as:
-
-
-  ```erlang
-    old_enough(X)  when X >= 16 -> 
-      true;
-    old_enough(_) -> 
-      false.
-
-   ```
-The above is not only shorter but clearer, compared to the former. Guards must return true to succeed, allowing to have multiple guard statements. If you have any number of comma separated guards all have to succeed for the entire guard to pass.
-
-  ```erlang
-    right_age(X)  when X >= 16, X =< 104 -> 
-      true;
-    right_age(_) -> 
-      false.
-
-   ```
-Guards however do not accept user-defined functions due to side effects, Erlang is not a pure functional language like Haskell as it operates on some side effects.
-
-**If Clauses**
-In Erlang `if` clauses are like guards in their syntax but they are not in the function clause's head like guard clauses are.
-
-A module showing use of `if` statement in Erlang:
-
-```erlang
--module(what_the_if).
--export([heh_fine/0,oh_god/1, help_me/1]).
-
-heh_fine() ->
-    if 1 =:= 1 ->
-        works
-    end,
-    if 1 =:= 2; 1 =:= 1 ->
-        works
-    end,
-    if 1 =:= 1, 1 =:= 1 ->
-        fail
-    
-    end.
-
-% what_the_if:oh_god(2)
-
-oh_god(N) ->
-  if N =:= 2 -> might_succeed;
-  true -> always_does %% This is Erlang's if's 'else!'
-end.
-
-% what_the_if:help_me(dog).
-help_me(Animal) ->
-    Talk = if Animal == cat -> "meow";
-              Animal == beef -> "mooo";
-              Animal == dog -> "bark";
-              Animal == tree -> "bark";
-              true -> "ghfghsafghdsgha"
-            end,
-    {Animal, "says " ++ Talk ++ "!"}.
+    one() -> 1.
+    two() -> 2.
+ 
+    add(X,Y) -> X() + Y().
+    increment([]) -> [];
+    increment([H|T]) -> [H+1|increment(T)].
+    decrement([]) -> [];
+    decrement([H|T]) -> [H-1|decrement(T)].
+    map(_, []) -> [];
+    map(F, [H|T]) -> [F(H)|map(F,T)].
+    incr(X) -> X + 1.
+    decr(X) -> X - 1.
 
 ```
-Using `true` is common in Erlang however it is not the best thus instead of doing this
+This results into:
 
 ```erlang
-   if X > Y -> a()
-    : true -> b()
-   end
- ```
+  1> c(hhfuns).
+  {ok, hhfuns}
+  2> hhfuns:add(one,two).
+  ** exception error: bad function one
+  in function  hhfuns:add/2
+  3> hhfuns:add(1,2).
+  ** exception error: bad function 1
+  in function  hhfuns:add/2
+  4> hhfuns:add(fun hhfuns:one/0, fun hhfuns:two/0).
+  3
+```
 
- You can do something like:
+```erlang
+  1> c(hhfuns).
+  {ok, hhfuns}
+  2> L = [1,2,3,4,5].
+  [1,2,3,4,5]
+  3> hhfuns:increment(L).
+  [2,3,4,5,6]
+  4> hhfuns:decrement(L).
+  [0,1,2,3,4]
+  5> hhfuns:map(fun hhfuns:incr/1, L).
+  [2,3,4,5,6]
+  6> hhfuns:map(fun hhfuns:decr/1, L).
+  [0,1,2,3,4]
+```
 
- ```erlang
-   if X > Y -> a()
-    : X =< Y  -> b()
-   end
- ```
+**Anonymous Functions**
+Anonymous functions, or funs, address that problem by letting you declare a special kind of function inline, without naming them. They can do pretty much everything normal functions can do, except calling themselves recursively (how could they do it if they are anonymous?).
 
- **Case expressions**
- Case expressions is like the whole function head, the same way we compare an `if` to a guard.
+```erlang
+  fun(Args1) ->
+    Expression1, Exp2, ..., ExpN;
+   (Args2) ->
+     Expression1, Exp2, ..., ExpN;
+   (Args3) ->
+     Expression1, Exp2, ..., ExpN
+  end
+```
+Anonymous functions can be used as below:
+```erlang
+  7> Fn = fun() -> a end.
+  #Fun<erl_eval.20.67289768>
+  8> Fn().
+  a
+  9> hhfuns:map(fun(X) -> X + 1 end, L).
+  [2,3,4,5,6]
+  10> hhfuns:map(fun(X) -> X - 1 end, L).
+  [0,1,2,3,4]
+```
+More on anonymous functions:
 
- ```erlang
-   -module(cases).
-   -export([insert/2, beach/1]).
-
-   insert(X,[]) ->
-     [X];
-   insert(X,Set) ->
-    case lists:member(X,Set) of
-      true -> Set;
-      false -> [X|Set]
-    end.
-
-   beach(Temperature) ->
-    case Temperature of
-        {celsius, N} when N >= 20, N =< 45 ->
-            'favourable';
-        {kelvin, N} when N >= 293, N =< 318 ->
-            'scientifically favourable';
-        {fahrenheit, N} when N >= 68, N =< 113 ->
-            'favourable in the us';
-        _ ->
-            'avoid beach'
-    end.
-
- ```
- The above can be represented as:
-  ```erlang
-    beachf({celsius, N}) when N >= 20, N =< 45 ->
-       'favourable';
-    ...
-    beachf(_) ->
-      'avoid beach'.
-  ```
-
+```erlang
+  11> PrepareAlarm = fun(Room) ->
+  11>                     io:format("Alarm set in ~s.~n",[Room]),
+  11>                     fun() -> io:format("Alarm tripped in ~s! Call Batman!~n",[Room]) end
+  11>                   end.
+  #Fun<erl_eval.20.67289768>
+  12> AlarmReady = PrepareAlarm("bathroom").
+  Alarm set in bathroom.
+  #Fun<erl_eval.6.13229925>
+  13> AlarmReady().
+  Alarm tripped in bathroom! Call Batman!
+  ok
+```
+Closure allows for functions to access variables within their scopes.
 **References**
 
   For more information on this topic you can checkout the following amazing posts:
-1. [Learn You Some Erlang For Greater Good](https://learnyousomeerlang.com//)
-2. [100 days of code](https://www.100daysofcode.com//)
+1. [Higher Order Functions](https://learnyousomeerlang.com/higher-order-functions#get-functional)
+
 
