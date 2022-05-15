@@ -5,6 +5,7 @@ categories:
 tags:
   - Programming 101
   - Pattern Matching
+  - 60daysofErlang
 ---
   An `=` sign in Erlang/Elixir is not about assignment but rather is a match operator, the same way it is in Algebra. Pattern matching allows for using different function clauses to match different cases, this results in having methods with the same name and arity unlike in languages such as Ruby.
   

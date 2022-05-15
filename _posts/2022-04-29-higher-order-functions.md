@@ -5,6 +5,7 @@ categories:
 tags:
   - Higher Order Functions
   - Closures
+  - 60daysofErlang
 ---
   In functional programming concept of higher order functions is where we use functions as parameters to other functions. Resulting in the function parameter being used as any other variable within the function. The origin of higher order functions is [lambda calculus](https://en.wikipedia.org/wiki/Lambda_calculus).
 

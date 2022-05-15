@@ -4,6 +4,7 @@ categories:
   - Erlang
 tags:
   - Errors
+  - 60daysofErlang
   
 ---
 Errors come in many flavours such as compile-time errors, logical errors, run-time errors and generated errors. Compile-time errors are often syntactic mistakes: check your function names, the tokens in the language (brackets, parentheses, periods, commas), the arity of your functions, etc.

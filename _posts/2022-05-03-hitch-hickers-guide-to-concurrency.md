@@ -4,6 +4,7 @@ categories:
   - Concurrency
 tags:
   - Concurrency
+  - 60daysofErlang
   
 ---
 Coming soon

@@ -4,6 +4,7 @@ categories:
   - Erlang
 tags:
   - Type System
+  - 60daysofErlang
 ---
   Type Safety is the new cool, type systems give programmers more safety and speed due to less errors. Erlang is a dynamically typed language where error is caught at runtime and not compile time.
   Many developers are of the opinion that statically typed languages have more safety compared to their dynamically typed counterparts. This may be true to when comparing with most dynamically typed languages but not Erlang. Erlang accounts for most errors through strategies such as distribution over different nodes and handling unexpected errors.
