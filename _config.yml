@@ -60,7 +60,7 @@ plugins:
 author:
   name: "Paul Oguda"
   avatar: "/assets/images/bio-photo.jpg"
-  bio: "Shit I learned About Yesterday."
+  bio: "Still feels like day one"
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
