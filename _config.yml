@@ -118,7 +118,7 @@ tag_archive:
 comments:
   provider: "giscus"
   giscus:
-    repo: "kamalogudah/kamalogudah.github.io"
+    repo: kamalogudah/kamalogudah.github.io
     repo_id: "MDEwOlJlcG9zaXRvcnkyNDY2MTM2NjY"
     category_name: "General"
     category_id: "DIC_kwDODrMGos4C7IHh"
