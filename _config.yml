@@ -113,3 +113,14 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+# Comments (Giscus)
+comments:
+  provider: "giscus"
+  giscus:
+    repo_id: "MDEwOlJlcG9zaXRvcnkyNDY2MTM2NjY"
+    category_name: "General"
+    category_id: "DIC_kwDODrMGos4C7IHh"
+    discussion_term: "pathname"
+    reactions_enabled: "1"
+    theme: "dark"
