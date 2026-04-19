@@ -118,7 +118,7 @@ zig build-exe hello.zig -target wasm32-wasi
 
 ## Looking Ahead
 
-Tomorrow, I'll look into Ziglings do about 10 exercises. 
+Tomorrow, I'll look into Ziglings and do about 10 exercises. 
 Stay tuned for Day 2!
 
 **References**
