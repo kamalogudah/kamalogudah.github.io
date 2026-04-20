@@ -9,7 +9,7 @@ tags:
   - 1000DaysOfZig
 ---
 
-Welcome to Day 1 of my 1000 Days of Zig challenge! Today, I'm setting up the environment and writing my first Zig program.Truth be told this is like my month four of doing Zig, I started back in December, take this Day 1 story with caution.
+Welcome to Day 1 of my 1000 Days of Zig challenge! Today, I'm setting up the environment and writing my first Zig program. Truth be told, this is my fourth month of doing Zig. I started back in December, so take this Day 1 story with a grain of salt.
 
 ## Installing Zig
 
@@ -64,7 +64,7 @@ Hello, World!
 Let's break down what's happening:
 
 1. **`const std = @import("std");`** - Imports the Zig standard library and assigns it to the constant `std`
-2. **`pub fn main() void`** - Declares the main function that returns nothing (`void`). Zig is still under heavy development just recently [Zig 0.16 was released](https://ziglang.org/download/0.16.0/release-notes.html), which introduced a number of big changes, [Writergate](https://github.com/ziglang/zig/pull/24329?ref=dailydev) was also part of the release
+2. **`pub fn main() void`** - Declares the main function that returns nothing (`void`). Zig is still under heavy development. Just recently, [Zig 0.16 was released](https://ziglang.org/download/0.16.0/release-notes.html), which introduced a number of big changes, including [Writergate](https://github.com/ziglang/zig/pull/24329?ref=dailydev).
 3. **`std.debug.print()`** - Uses the standard library's debug print function
 4. **`.{}`** - An empty anonymous struct literal, used here as the format arguments
 
