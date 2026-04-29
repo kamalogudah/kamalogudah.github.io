@@ -13,11 +13,37 @@ tags:
 Today is the eighth day of trying to do 1000 continuous days of learning Zig.
 
 ## Pointers
-A pointer is a reference to a value. In the example below, bar is a reference to the memory space currently containing the value 5.
+A pointer is a reference to a value. Normal pointers in Zig cannot have 0 or null as a value. They follow the syntax `*T`, where T is the child type. Referencing is done with `&variable`, and dereferencing is done with `variable.*.` In the example below, bar is a reference to the memory space currently containing the value 5.
 ```zig
     var foo: u8 = 5;      // foo is 5
     var bar: *u8 = &foo;  // bar is a pointer
 ```
+
+```zig
+const expect = @import("std").testing.expect;
+
+fn increment(num: *u8) void {
+    num.* += 1;
+}
+
+test "pointers" {
+    var x: u8 = 1;
+    increment(&x);
+    try expect(x == 2);
+}
+```
+The code below will throw an error, as we are trying to set a *T to the value 0.
+
+
+```zig
+test "naughty pointer" {
+    var x: u16 = 5;
+    x -= 5;
+    var y: *u8 = @ptrFromInt(x);
+    y = y;
+}
+```
+
 A pointer cheatsheet based on the above definition of a pointer.
 ```zig
 // A cheatsheet given the above declarations:
