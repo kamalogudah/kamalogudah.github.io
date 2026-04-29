@@ -7,6 +7,7 @@ tags:
   - Zig
   - Ziglings
   - 1000DaysOfZig
+  - optionals
 ---
 
 The 9th day of my 1000 days of Zig was spent on Ziglings.

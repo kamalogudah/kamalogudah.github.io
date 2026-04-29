@@ -12,7 +12,7 @@ tags:
 On the 6th day of our 1000-day journey with Zig, most of the time was spent working on Ziglings. Presently we are at almost the 30th exercise mark, with a few more dozen to go. So far enjoying the learning and totally loving it.
 
 ## Switch 
-Yesterday we looked at defer, errdefer among other things, today we get back to control flow selection using switch statements. With switch statements one can match possible values of an expression, thereby performing different actions based on each value.
+Yesterday we looked at defer, errdefer among other things, today we get back to control flow selection using switch statements. Zig's switch works as both a statement and an expression. The types of all branches must coerce to the type which is being switched upon. All possible values must have an associated branch - values cannot be left out. Cases cannot fall through to other branches.With switch statements one can match possible values of an expression, thereby performing different actions based on each value.
 ```zig
      switch (players) {
          1 => startOnePlayerGame(),
@@ -45,7 +45,7 @@ Like if statements, one can use switch statements as expressions which return va
 ```
 
 ## Unreachable Statement
-Something unique to Zig is the unreachable statement, which is used when you want to tell the compiler that a given part of the code should not be executed, where reaching that part of the code is deemed an error.
+Something unique to Zig is the unreachable statement, which is used when you want to tell the compiler that a given part of the code should not be executed, where reaching that part of the code is deemed an error. unreachable is an assertion to the compiler that this statement will not be reached. 
 ```zig
 if (true) {
          ...
@@ -53,6 +53,35 @@ if (true) {
          unreachable;
      }
 ```
+It can tell the compiler that a branch is impossible, which the optimiser can then take advantage of. Reaching an unreachable is detectable illegal behaviour. As it is of the type `noreturn`, it is compatible with all other types. Here it coerces to u32.
+
+```zig
+test "unreachable" {
+    const x: i32 = 1;
+    const y: u32 = if (x == 2) 5 else unreachable;
+    _ = y;
+}
+```
+
+Unreachable with a switch:
+```zig
+const expect = @import("std").testing.expect;
+
+fn asciiToUpper(x: u8) u8 {
+    return switch (x) {
+        'a'...'z' => x + 'A' - 'a',
+        'A'...'Z' => x,
+        else => unreachable,
+    };
+}
+
+test "unreachable switch" {
+    try expect(asciiToUpper('a') == 'A');
+    try expect(asciiToUpper('A') == 'A');
+}
+```
+
+
 ## If error
 We have looked at a number of ways of handling errors such as using catch and try; another variation is using the if statement.
 ```zig
@@ -84,3 +113,4 @@ Tomorrow, is Saturday, I may take a short break but will find a way to doing som
 **References**
 
 1. [Ziglings](https://codeberg.org/ziglings)
+2. [Zig guide](https://zig.guide/language-basics/switch)

@@ -7,6 +7,7 @@ tags:
   - Zig
   - Ziglings
   - 1000DaysOfZig
+  - pointers
 ---
 
 Today is the eighth day of trying to do 1000 continuous days of learning Zig.
